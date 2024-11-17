@@ -11,7 +11,7 @@ const CategoryNews = () => {
            <p className="text-gray-400">{news.length}  News Found in this category</p>
            <div>
             {
-                news.map(singleNews => <NewsCard key={singleNews._id } singleNews={singleNews}></NewsCard> )
+                news.map(singleNews => <NewsCard key={news._id } singleNews={singleNews}></NewsCard> )
             }
            </div>
         </div>

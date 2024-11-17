@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const NewsCard = ({singleNews}) => {
     const {
@@ -9,6 +10,7 @@ const NewsCard = ({singleNews}) => {
         rating,
         total_view,
         details,
+        _id
       } = singleNews;
     return (
         <div className=" w-full mb-4 mt-6 bg-white border rounded-lg shadow-lg overflow-hidden">
@@ -32,15 +34,15 @@ const NewsCard = ({singleNews}) => {
         <img
           src={thumbnail_url}
           alt="Thumbnail"
-          className="w-full h-56 object-cover mt-4"
+          className="w-full  h-96 object-cover top mt-4"
         />
   
         {/* Details */}
         <p className="text-gray-600 text-sm px-4 py-4">
           {details.slice(0, 120)}...
-          <span className="text-blue-500 font-semibold cursor-pointer">
+          <Link to={`/news/${_id}`} className="text-blue-500 font-semibold cursor-pointer">
             Read More
-          </span>
+          </Link>
         </p>
   
         {/* Footer */}
