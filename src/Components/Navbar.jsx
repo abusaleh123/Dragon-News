@@ -14,11 +14,18 @@ const Navbar = () => {
                 <NavLink to={"/"}>Home</NavLink>
                 <NavLink to={"/career"}>Career</NavLink>
                 <NavLink to={"/about"}>About</NavLink>
+                <NavLink to={"/dev"}>Dev Information</NavLink>
                
             </div>
             <div className="login flex gap-2 items-center">
                 <div>
-                <img src={userIcon} alt="" />
+                    {
+                        user && user?.email ? <div>
+                            <img className='w-20' src={user?.photoURL} alt="" />
+                            <p>{user.displayName}</p>
+                        </div>: <img src={userIcon} alt="" />
+                    }
+                
                 </div>
                 {
                     user && user?.email ? ( 

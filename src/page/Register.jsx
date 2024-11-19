@@ -1,27 +1,37 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 
 const Register = () => {
-const {createNewUser,  setUser} = useContext(AuthContext)
+const {createNewUser,  setUser, updateUserProfile} = useContext(AuthContext);
+const [error,setError] = useState({});
+const navigate = useNavigate()
 
 const handleSubmit = e => {
     e.preventDefault();
 
     const form = new FormData(e.target);
     const name = form.get("name");
+    if(name.length < 5) {
+      setError({...error, name: "Must be more the 5 character"});
+      return;
+    }
     const photo = form.get("photo");
     const email = form.get("email");
     const password = form.get("password");
    
-    console.log({name, photo, email, password});
+    // console.log({name, photo, email, password});
 
     createNewUser(email, password)
     .then((result) => {
         const user = result.user;
         setUser(user)
-        console.log(user);
+        updateUserProfile({displayName: name, photoURL : photo})
+        .then(() => {
+          navigate("/")
+        })
+        .catch(error => console.log(error))
     })
     .catch(error => {
         console.log("Error" , error.message);
@@ -48,6 +58,13 @@ const handleSubmit = e => {
                 </label>
                 <input name='name' type="text" placeholder="Your Name" className="input input-bordered" required />
               </div>
+              {
+                error.name && (
+                  <label className="label text-red-500">
+                  {error.name}
+                </label>
+                )
+              }
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Photo URL</span>
